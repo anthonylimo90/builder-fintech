@@ -34,7 +34,8 @@ let menu = new UssdMenu();
 menu.startState({
     run: async () => {
         let phoneNumber = menu.args.phoneNumber;
-        
+        signale.debug(`This is the phone number in use: ${phoneNumber}`);
+
         if (controller.queryUserData(phoneNumber) == null) {
             const resp = await customer.customerQuery(phoneNumber);
             console.log(resp, phoneNumber);
