@@ -1,6 +1,25 @@
 require("dotenv").config();
+const signale = require("signale");
 const express = require("express");
 const UssdMenu = require('ussd-menu-builder');
+const mongoose = require("mongoose");
+
+const controller = require("./utils/controller");
+const customer = require("./utils/customer");
+
+const Model = require("./models/model");
+
+const mongoString = process.env.MONGO_URI;
+
+mongoose.connect(mongoString);
+const database = mongoose.connection;
+
+database.on("error", (error) => {
+    signale.error(`Something went wrong while trying to connect to the database: ${error}`);
+});
+database.once("connected", () => {
+    signale.success("Database is connected...😎");
+});
 
 const port = process.env.PORT || 3000;
 
@@ -13,11 +32,38 @@ let menu = new UssdMenu();
 
 // Define menu states
 menu.startState({
-    run: () => {
+    run: async () => {
+        if (controller.queryUserData(phoneNumber) == null) {
+            const resp = await customer.customerQuery(phoneNumber);
+            console.log(resp, phoneNumber);
+            if(resp.responseCode === "IASP4002"){
+                menu.end("END User not registered. Kindly register with the service before proceeding");
+            } else if(responseCode === "IAS00000") {
+                await controller.saveInitialData(resp, phoneNumber);
+                menu.con(`
+                CON Welcome to Nisome Bank 
+                ${resp.firstName} ${resp.lastName} 
+                User No ${resp.userNo}
+                1. Check Balance
+                2. Check KYC status
+                3. Check Loan Limit`);
+            }
+        } else {
+            const resp = await customer.customerQuery(phoneNumber);
+            console.log(resp, phoneNumber);
+            
+            menu.con(`
+            CON Welcome to Nisome Bank 
+            ${resp.firstName} ${resp.lastName} 
+            User No ${resp.userNo}
+            1. Check Balance
+            2. Check KYC status
+            3. Check Loan Limit`);
+        }
         // use menu.con() to send response without terminating session      
-        menu.con('Welcome. Choose option:' +
-            '\n1. Show Balance' +
-            '\n2. Buy Airtime');
+        // menu.con('Welcome. Choose option:' +
+        //     '\n1. Show Balance' +
+        //     '\n2. Buy Airtime');
     },
     // next object links to next state based on user input
     next: {
@@ -58,7 +104,7 @@ menu.state('buyAirtime.amount', {
 });
 
 app.get("/", (req, res) => {
-    console.log("Hey, I'm alive 🧟🧟")
+    signale.info("Hey, I'm alive 🧟🧟")
 });
 
 // Registering USSD handler with Express
@@ -70,5 +116,5 @@ app.post('/ussd', function(req, res){
 });
 
 app.listen(port, () => {
-    console.log(`Service is running on port: ${port}`);
+    signale.success(`Service is running on port: ${port}`);
 });
