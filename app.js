@@ -33,6 +33,8 @@ let menu = new UssdMenu();
 // Define menu states
 menu.startState({
     run: async () => {
+        let phoneNumber = menu.args.phoneNumber;
+        
         if (controller.queryUserData(phoneNumber) == null) {
             const resp = await customer.customerQuery(phoneNumber);
             console.log(resp, phoneNumber);
