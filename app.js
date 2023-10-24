@@ -36,24 +36,26 @@ menu.startState({
         let phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
-        if (controller.queryUserData(phoneNumber) == null) {
-            const resp = await customer.customerQuery(phoneNumber);
-            console.log(resp, phoneNumber);
-            if(resp.responseCode === "IASP4002"){
-                menu.end("END User not registered. Kindly register with the service before proceeding");
-            } else if(responseCode === "IAS00000") {
-                await controller.saveInitialData(resp, phoneNumber);
-                menu.con(`
-                CON Welcome to Nisome Bank 
-                ${resp.firstName} ${resp.lastName} 
-                User No ${resp.userNo}
-                1. Check Balance
-                2. Check KYC status
-                3. Check Loan Limit`);
-            }
-        } else {
-            const resp = await customer.customerQuery(phoneNumber);
-            console.log(resp, phoneNumber);
+        const resp = await customer.customerQuery(phoneNumber);
+
+        if (controller.queryUserData(phoneNumber) == null && resp.responseMessage !== "SUCCESS") {
+            // const resp = await customer.customerQuery(phoneNumber);
+            menu.end("END User not registered. Kindly register with the service before proceeding");
+        } else if (resp.responseMessage === "SUCCESS" && controller.queryUserData(phoneNumber) !== null) {
+            await controller.saveInitialData(resp, phoneNumber);
+            
+            menu.con(`
+            CON Welcome to Nisome Bank 
+            ${resp.firstName} ${resp.lastName} 
+            User No ${resp.userNo}
+            1. Check Balance
+            2. Check KYC status
+            3. Check Loan Limit`);
+            
+        }
+        else {
+            // const resp = await customer.customerQuery(phoneNumber);
+            // console.log(resp, phoneNumber);
             
             menu.con(`
             CON Welcome to Nisome Bank 
