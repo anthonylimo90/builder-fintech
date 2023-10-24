@@ -48,30 +48,6 @@ menu.startState({
             
             `);
 
-            // if (controller.queryUserData(phoneNumber) == null && resp.responseMessage != "SUCCESS") {
-            //     // const resp = await customer.customerQuery(phoneNumber);
-            //     menu.end("END User not registered. Kindly register with the service before proceeding");
-            // } else if (resp.responseMessage == "SUCCESS" && controller.queryUserData(phoneNumber) != null) {
-            //     controller.saveInitialData(resp, phoneNumber);
-                
-            //     menu.con(`
-            //     CON Welcome to Nisome Bank 
-            //     ${resp.firstName} ${resp.lastName} 
-            //     User No ${resp.userNo}
-            //     1. Check Balance
-            //     2. Check KYC status
-            //     3. Check Loan Limit`);
-            // }
-            // else {     
-            //     menu.con(`
-            //     CON Welcome to Nisome Bank 
-            //     ${resp.firstName} ${resp.lastName} 
-            //     User No ${resp.userNo}
-            //     1. Check Balance
-            //     2. Check KYC status
-            //     3. Check Loan Limit`);
-            // }
-
             if (resp.responseCode == "IAS00000" && controller.queryUserData(phoneNumber) != null) {
                 menu.con(`
                 Welcome to Nisome Bank
@@ -109,33 +85,37 @@ menu.startState({
 });
 
 menu.state('checkBalance', {
-    run: () => {
+    run: async () => {
         // fetch balance
-        fetchBalance(menu.args.phoneNumber).then(function(bal){
-            // use menu.end() to send response and terminate session
-            menu.end('Your balance is KES ' + bal);
+        await customer.walletQuery(menu.args.phoneNumber).then(async (resp) => {
+            signale.debug(`This customer's wallet has: ${resp.balance} KES`);
+            menu.end(`Your balance is: ${resp.balance} KES`);
+        }).catch(error => {
+            signale.error( `Something went terribly wrong 🤯: ${error}`);
         });
     }
 });
 
 menu.state('checkKYCStatus', {
-    run: () => {
-        menu.con('Enter amount:');
-    },
-    next: {
-        // using regex to match user input to next state
-        '*\\d+': 'buyAirtime.amount'
+    run: async () => {
+        await customer.customerKYCQuery(phoneNumber).then(async (resp) => {
+            signale.debug(`This customer's KYC status is: ${resp.kycStatus}`);
+            menu.end(`Your KYC status is: ${resp.kycStatus}`);
+        }).catch(error => {
+            signale.error( `Something went terribly wrong 🤯: ${error}`);
+        });
     }
 });
 
 // nesting states
 menu.state('checkLoanLimit', {
-    run: () => {
-        // use menu.val to access user input value
-        var amount = Number(menu.val);
-        buyAirtime(menu.args.phoneNumber, amount).then(function(res){
-            menu.end('Airtime bought successfully.');
-        });
+    run: async () => {
+        await customer.loanQuery(phoneNumber).then(async (resp) => {
+            signale.debug(`This customer's loan limit is: ${resp.creditLimit}`);
+            menu.end(`Your loan limit is: ${resp.creditLimit}`);
+        }).catch(error => {
+            signale.error( `Something went terribly wrong 🤯: ${error}`);
+        })
     }
 });
 

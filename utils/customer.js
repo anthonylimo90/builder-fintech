@@ -63,16 +63,20 @@ const customer = {
         const customerResp = await axios.post(
             "https://sandbox.loop.co.ke/v1/customer/query",
             {
-                "requestDateTime": utils.getCurrentDate(),
-                "requestId": utils.generateRandomNumber(),
-                "userIdType": "P",
-                "accountNo": "420410001106",
-                "reserve1": "",
-                "reserve2": "",
-                "requestChannel": "APP",
-                "userId": removeThePlus(phoneNumber),
-                "partnerId": "LOOP",
-                "productSet": "LOOP"
+                    "lastName": "Cherutich",
+                    "requestDateTime": utils.getCurrentDate(),
+                    "userIdType": "P",
+                    "idTyp": "01",
+                    "reserve1": "",
+                    "reserve2": "",
+                    "userId": utils.removeThePlus(phoneNumber),
+                    "idNo": "30990528",
+                    "partnerId": "LOOP",
+                    "productSet": "LOOP",
+                    "firstName": "Anthony",
+                    "requestId": utils.generateRandomNumber(),
+                    "middleName": "Kiplimo",
+                    "requestChannel": "APP"
             },
             {
                 headers: {
