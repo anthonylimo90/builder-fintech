@@ -72,8 +72,7 @@ menu.startState({
             //     3. Check Loan Limit`);
             // }
 
-            if (resp.responseCode == "ISA00000" && controller.queryUserData(phoneNumber) == null) {
-                await controller.saveInitialData(JSON.stringify(resp), phoneNumber);
+            if (resp.responseCode == "IAS00000" && controller.queryUserData(phoneNumber) != null) {
                 menu.con(`
                 Welcome to Nisome Bank
                 ${resp.firstName} ${resp.lastName}
@@ -84,8 +83,18 @@ menu.startState({
                 `);
             } else if (resp.responseCode == "IASP4002") {
                 menu.end("Kindly register for the Nisome bank service to enjoy our free credit!");
+            }else if (resp.responseCode == "IAS00000" && controller.queryUserData(phoneNumber) == null) {
+                await controller.saveInitialData(JSON.stringify(resp), phoneNumber);
+                menu.con(`
+                Welcome to Nisome Bank
+                ${resp.firstName} ${resp.lastName}
+                User No ${resp.userNo}
+                1. Check balance
+                2. Check KYC Status
+                3. Check Loan Limit
+                `);
             } else {
-                menu.end("END Invalid response. Please try again");
+                menu.end("Invalid response. Please try again");
             }
         }).catch(error => {
             signale.error( `Something went terribly wrong 🤯: ${error}`);
