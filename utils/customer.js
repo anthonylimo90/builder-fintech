@@ -41,7 +41,7 @@ const customer = {
                 "reserve1": "",
                 "reserve2": "",
                 "requestChannel": "APP",
-                "userId": removeThePlus(phoneNumber),
+                "userId": utils.removeThePlus(phoneNumber),
                 "partnerId": "LOOP",
                 "productSet": "LOOP"
             },
