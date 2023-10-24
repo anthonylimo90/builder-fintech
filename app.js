@@ -113,7 +113,7 @@ menu.state('checkKYCStatus', {
 menu.state('checkLoanLimit', {
     run: async () => {
         const phoneNumber = menu.args.phoneNumber;
-        await customer.loanQuery(phoneNumber).then(async (resp) => {
+        await customer.loanLimitQuery(phoneNumber).then(async (resp) => {
             signale.debug(`This customer's loan limit is: ${resp.creditLimit}`);
             menu.end(`Your loan limit is: ${resp.creditLimit}`);
         }).catch(error => {
