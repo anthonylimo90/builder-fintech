@@ -36,7 +36,7 @@ menu.startState({
         const phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
-        await customer.customerQuery(phoneNumber).then((resp) => {
+        await customer.customerQuery(phoneNumber).then(async (resp) => {
             signale.debug(`Checking the resp object in customer validation: ${JSON.stringify(resp)}`);
 
             signale.note(`Checking the resp values for the different values: 
@@ -48,28 +48,44 @@ menu.startState({
             
             `);
 
-            if (controller.queryUserData(phoneNumber) == null && resp.responseMessage != "SUCCESS") {
-                // const resp = await customer.customerQuery(phoneNumber);
-                menu.end("END User not registered. Kindly register with the service before proceeding");
-            } else if (resp.responseMessage == "SUCCESS" && controller.queryUserData(phoneNumber) != null) {
-                controller.saveInitialData(resp, phoneNumber);
+            // if (controller.queryUserData(phoneNumber) == null && resp.responseMessage != "SUCCESS") {
+            //     // const resp = await customer.customerQuery(phoneNumber);
+            //     menu.end("END User not registered. Kindly register with the service before proceeding");
+            // } else if (resp.responseMessage == "SUCCESS" && controller.queryUserData(phoneNumber) != null) {
+            //     controller.saveInitialData(resp, phoneNumber);
                 
+            //     menu.con(`
+            //     CON Welcome to Nisome Bank 
+            //     ${resp.firstName} ${resp.lastName} 
+            //     User No ${resp.userNo}
+            //     1. Check Balance
+            //     2. Check KYC status
+            //     3. Check Loan Limit`);
+            // }
+            // else {     
+            //     menu.con(`
+            //     CON Welcome to Nisome Bank 
+            //     ${resp.firstName} ${resp.lastName} 
+            //     User No ${resp.userNo}
+            //     1. Check Balance
+            //     2. Check KYC status
+            //     3. Check Loan Limit`);
+            // }
+
+            if (resp.responseCode == "ISA00000" && controller.queryUserData(phoneNumber) == null) {
+                await controller.saveInitialData(JSON.stringify(resp), phoneNumber);
                 menu.con(`
-                CON Welcome to Nisome Bank 
-                ${resp.firstName} ${resp.lastName} 
+                Welcome to Nisome Bank
+                ${resp.firstName} ${resp.lastName}
                 User No ${resp.userNo}
-                1. Check Balance
-                2. Check KYC status
-                3. Check Loan Limit`);
-            }
-            else {     
-                menu.con(`
-                CON Welcome to Nisome Bank 
-                ${resp.firstName} ${resp.lastName} 
-                User No ${resp.userNo}
-                1. Check Balance
-                2. Check KYC status
-                3. Check Loan Limit`);
+                1. Check balance
+                2. Check KYC Status
+                3. Check Loan Limit
+                `);
+            } else if (resp.responseCode == "IASP4002") {
+                menu.end("Kindly register for the Nisome bank service to enjoy our free credit!");
+            } else {
+                menu.end("END Invalid response. Please try again");
             }
         }).catch(error => {
             signale.error( `Something went terribly wrong 🤯: ${error}`);
