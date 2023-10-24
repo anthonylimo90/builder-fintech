@@ -87,6 +87,7 @@ menu.startState({
 menu.state('checkBalance', {
     run: async () => {
         // fetch balance
+        const phoneNumber = menu.args.phoneNumber;
         await customer.walletQuery(menu.args.phoneNumber).then(async (resp) => {
             signale.debug(`This customer's wallet has: ${resp.balance} KES`);
             menu.end(`Your balance is: ${resp.balance} KES`);
@@ -98,6 +99,7 @@ menu.state('checkBalance', {
 
 menu.state('checkKYCStatus', {
     run: async () => {
+        const phoneNumber = menu.args.phoneNumber;
         await customer.customerKYCQuery(phoneNumber).then(async (resp) => {
             signale.debug(`This customer's KYC status is: ${resp.kycStatus}`);
             menu.end(`Your KYC status is: ${resp.kycStatus}`);
@@ -110,6 +112,7 @@ menu.state('checkKYCStatus', {
 // nesting states
 menu.state('checkLoanLimit', {
     run: async () => {
+        const phoneNumber = menu.args.phoneNumber;
         await customer.loanQuery(phoneNumber).then(async (resp) => {
             signale.debug(`This customer's loan limit is: ${resp.creditLimit}`);
             menu.end(`Your loan limit is: ${resp.creditLimit}`);
