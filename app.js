@@ -38,6 +38,8 @@ menu.startState({
 
         const resp = await customer.customerQuery(phoneNumber);
 
+        signale.debug(`${resp.responseMessage}`);
+
         if (controller.queryUserData(phoneNumber) == null && resp.responseMessage !== "SUCCESS") {
             // const resp = await customer.customerQuery(phoneNumber);
             menu.end("END User not registered. Kindly register with the service before proceeding");
@@ -51,7 +53,7 @@ menu.startState({
             1. Check Balance
             2. Check KYC status
             3. Check Loan Limit`);
-            
+
         }
         else {
             // const resp = await customer.customerQuery(phoneNumber);
