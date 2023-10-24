@@ -33,11 +33,11 @@ let menu = new UssdMenu();
 // Define menu states
 menu.startState({
     run: async () => {
-        let phoneNumber = menu.args.phoneNumber;
+        const phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
         await customer.customerQuery(phoneNumber).then((resp) => {
-            signale.debug(`Checking the resp object in customer validation: ${resp}`);
+            signale.debug(`Checking the resp object in customer validation: ${JSON.stringify(resp)}`);
 
             signale.note(`Checking the resp values for the different values: 
             
@@ -48,7 +48,7 @@ menu.startState({
             
             `);
 
-            if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] != "SUCCESS") {
+            if (controller.queryUserData(phoneNumber) == null && resp.responseMessage != "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
             } else if (resp.responseMessage == "SUCCESS" && controller.queryUserData(phoneNumber) != null) {
