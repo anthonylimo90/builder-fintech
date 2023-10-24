@@ -36,12 +36,8 @@ menu.startState({
         let phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
-        await customer.customerQuery(phoneNumber).then((data) => {
-            signale.debug(`Checking the resp object in customer validation: ${data}`);
-
-            let resp = JSON.parse(data);
-
-            signale.debug(`Checking whats in the response object🤔: ${resp}`);
+        await customer.customerQuery(phoneNumber).then((resp) => {
+            signale.debug(`Checking the resp object in customer validation: ${resp}`);
 
             if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] !== "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
