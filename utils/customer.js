@@ -32,7 +32,7 @@ const customer = {
     walletQuery: async (phoneNumber) => {
 
         const customerResp = await axios.post(
-            "https://sandbox.loop.co.ke/v1/customer/query",
+            "https://sandbox.loop.co.ke/v1/account/wallet/inquiry",
             {
                 "requestDateTime": utils.getCurrentDate(),
                 "requestId": utils.generateRandomNumber(),
@@ -61,7 +61,7 @@ const customer = {
     },
     customerKYCQuery: async (phoneNumber) => {
         const customerResp = await axios.post(
-            "https://sandbox.loop.co.ke/v1/customer/query",
+            "https://sandbox.loop.co.ke/v1/customer/querykyc",
             {
                     "lastName": "Cherutich",
                     "requestDateTime": utils.getCurrentDate(),
@@ -92,7 +92,7 @@ const customer = {
     },
     loanLimitQuery: async (phoneNumber) => {
         const customerResp = await axios.post(
-            "https://sandbox.loop.co.ke/v1/customer/query",
+            "https://sandbox.loop.co.ke/v1/loan/inquiry",
             {
                     "productCode": "LONGEN01",
                     "requestDateTime": utils.getCurrentDate(),
