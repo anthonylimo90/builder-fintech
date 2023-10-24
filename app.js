@@ -39,7 +39,7 @@ menu.startState({
         await customer.customerQuery(phoneNumber).then((data) => {
             signale.debug(`Checking the resp object in customer validation: ${data}`);
             let resp = JSON.parse(data);
-            if (controller.queryUserData(phoneNumber) == null && resp.responseMessage !== "SUCCESS") {
+            if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] !== "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
             } else if (resp.responseMessage === "SUCCESS" && controller.queryUserData(phoneNumber) !== null) {
