@@ -36,7 +36,7 @@ menu.startState({
         let phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
-        const resp = await customer.customerQuery(phoneNumber).then(async () => {
+        await customer.customerQuery(phoneNumber).then(async () => {
             signale.debug(`Checking the resp object in customer validation: ${resp}`);
             const resp = JSON.parse(data);
             if (controller.queryUserData(phoneNumber) == null && resp.responseMessage !== "SUCCESS") {
@@ -67,11 +67,7 @@ menu.startState({
             }
         }).catch(error => {
             signale.error( `Something went terribly wrong 🤯: ${error}`);
-        });
-
-        signale.debug(`${resp.responseMessage}`);
-
-        
+        })
         // use menu.con() to send response without terminating session      
         // menu.con('Welcome. Choose option:' +
         //     '\n1. Show Balance' +
