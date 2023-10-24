@@ -37,6 +37,8 @@ menu.startState({
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
         const resp = await customer.customerQuery(phoneNumber).then(async (resp) => {
+            signale.debug(`Checking the resp object in customer validation: ${resp}`);
+            
             if (controller.queryUserData(phoneNumber) == null && resp.responseMessage !== "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
