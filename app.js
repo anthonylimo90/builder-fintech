@@ -39,6 +39,15 @@ menu.startState({
         await customer.customerQuery(phoneNumber).then((resp) => {
             signale.debug(`Checking the resp object in customer validation: ${resp}`);
 
+            signale.note(`Checking the resp values for the different values: 
+            
+            FirstName: ${resp.firstName}
+            LastName: ${resp.lastName}
+            responseCode: ${resp.responseCode}
+            responseMessage: ${resp.responseMessage}
+            
+            `);
+
             if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] !== "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
@@ -52,11 +61,8 @@ menu.startState({
                 1. Check Balance
                 2. Check KYC status
                 3. Check Loan Limit`);
-    
             }
-            else {
-                // const resp = await customer.customerQuery(phoneNumber);
-                // console.log(resp, phoneNumber);     
+            else {     
                 menu.con(`
                 CON Welcome to Nisome Bank 
                 ${resp.firstName} ${resp.lastName} 
@@ -71,12 +77,13 @@ menu.startState({
     },
     // next object links to next state based on user input
     next: {
-        '1': 'showBalance',
-        '2': 'buyAirtime'
+        '1': 'checkBalance',
+        '2': 'checkKYCStatus',
+        '3': 'checkLoanLimit'
     }
 });
 
-menu.state('showBalance', {
+menu.state('checkBalance', {
     run: () => {
         // fetch balance
         fetchBalance(menu.args.phoneNumber).then(function(bal){
@@ -86,7 +93,7 @@ menu.state('showBalance', {
     }
 });
 
-menu.state('buyAirtime', {
+menu.state('checkKYCStatus', {
     run: () => {
         menu.con('Enter amount:');
     },
@@ -97,7 +104,7 @@ menu.state('buyAirtime', {
 });
 
 // nesting states
-menu.state('buyAirtime.amount', {
+menu.state('checkLoanLimit', {
     run: () => {
         // use menu.val to access user input value
         var amount = Number(menu.val);
