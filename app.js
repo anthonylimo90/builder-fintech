@@ -38,7 +38,11 @@ menu.startState({
 
         await customer.customerQuery(phoneNumber).then((data) => {
             signale.debug(`Checking the resp object in customer validation: ${data}`);
+
             let resp = JSON.parse(data);
+
+            signale.debug(`Checking whats in the response object🤔: ${resp}`);
+
             if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] !== "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
@@ -67,11 +71,7 @@ menu.startState({
             }
         }).catch(error => {
             signale.error( `Something went terribly wrong 🤯: ${error}`);
-        })
-        // use menu.con() to send response without terminating session      
-        // menu.con('Welcome. Choose option:' +
-        //     '\n1. Show Balance' +
-        //     '\n2. Buy Airtime');
+        });
     },
     // next object links to next state based on user input
     next: {
