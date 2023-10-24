@@ -48,10 +48,10 @@ menu.startState({
             
             `);
 
-            if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] !== "SUCCESS") {
+            if (controller.queryUserData(phoneNumber) == null && resp["responseMessage"] != "SUCCESS") {
                 // const resp = await customer.customerQuery(phoneNumber);
                 menu.end("END User not registered. Kindly register with the service before proceeding");
-            } else if (resp.responseMessage === "SUCCESS" && controller.queryUserData(phoneNumber) !== null) {
+            } else if (resp.responseMessage == "SUCCESS" && controller.queryUserData(phoneNumber) != null) {
                 controller.saveInitialData(resp, phoneNumber);
                 
                 menu.con(`
