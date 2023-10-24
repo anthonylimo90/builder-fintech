@@ -36,7 +36,7 @@ menu.startState({
         let phoneNumber = menu.args.phoneNumber;
         signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
-        const resp = await customer.customerQuery(phoneNumber);
+        const resp = customer.customerQuery(phoneNumber);
 
         signale.debug(`${resp.responseMessage}`);
 
