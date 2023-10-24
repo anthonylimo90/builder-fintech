@@ -27,7 +27,7 @@ const customer = {
     
         console.log(customerResp.data);
     
-        return JSON.stringify(customerResp.data);
+        return customerResp.data;
     },
     walletQuery: async (phoneNumber) => {
 
@@ -55,7 +55,7 @@ const customer = {
     
         console.log(customerResp.data);
     
-        return JSON.stringify(customerResp.data);
+        return customerResp.data;
     
     
     },
