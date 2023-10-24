@@ -88,7 +88,7 @@ menu.state('checkBalance', {
     run: async () => {
         // fetch balance
         const phoneNumber = menu.args.phoneNumber;
-        await customer.walletQuery(menu.args.phoneNumber).then(async (resp) => {
+        await customer.walletQuery(phoneNumber).then(async (resp) => {
             signale.debug(`This customer's wallet has: ${resp.balance} KES`);
             menu.end(`Your balance is: ${resp.balance} KES`);
         }).catch(error => {
