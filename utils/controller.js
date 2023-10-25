@@ -34,7 +34,7 @@ const dataController = {
     queryUserData: async (phoneNumber) => {
         
         const queryResponse = await Model.exists({phoneNumber: phoneNumber});
-        console.log(queryResponse);
+        signale.log(queryResponse);
 
         return queryResponse;
         

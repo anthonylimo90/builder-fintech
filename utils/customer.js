@@ -1,4 +1,5 @@
 require("dotenv").config;
+const signale = require("signale");
 const axios = require("axios");
 const utils = require("./utils");
 
@@ -25,7 +26,7 @@ const customer = {
             }
         );
     
-        console.log(customerResp.data);
+        signale.debug(customerResp.data);
     
         return customerResp.data;
     },
@@ -53,7 +54,8 @@ const customer = {
             }
         );
     
-        console.log(customerResp.data);
+        signale.debug(utils.getCurrentDate());
+        signale.debug(customerResp);
     
         return customerResp.data;
     
@@ -86,7 +88,7 @@ const customer = {
             }
         );
     
-        console.log(customerResp.data);
+        signale.debug(customerResp.data);
     
         return customerResp.data;
     },
@@ -113,7 +115,7 @@ const customer = {
             }
         );
 
-        console.log(customerResp.creditLimit);
+        signale.debug(customerResp);
         return customerResp.creditLimit;
     }
 };
