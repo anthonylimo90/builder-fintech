@@ -115,7 +115,7 @@ menu.state('checkLoanLimit', {
         const phoneNumber = menu.args.phoneNumber;
         await customer.loanLimitQuery(phoneNumber).then(async (resp) => {
             signale.debug(`This customer's loan limit is: ${resp.creditLimit}`);
-            menu.end(`Your loan limit is: ${resp.data.creditLimit}`);
+            menu.end(`Your loan limit is: ${resp.creditLimit}`);
         }).catch(error => {
             signale.error( `Something went terribly wrong 🤯: ${error}`);
         })
