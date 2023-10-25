@@ -6,8 +6,8 @@ const utils = {
     },
     getCurrentDate: () => {
         let date = new Date();
-        //TODO: Remove hyphens from date response
-        return date.toISOString().substring(0, 10);
+        let preDate = date.toISOString().substring(0, 10);
+        return preDate.replace(/-/g, "");
     },
     removeThePlus: (phoneNumber) => {
         let correctPhoneNumber = phoneNumber.substring(1);

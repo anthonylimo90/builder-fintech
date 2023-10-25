@@ -3,6 +3,8 @@ const signale = require("signale");
 const axios = require("axios");
 const utils = require("./utils");
 
+const loopToken = "";
+
 const customer = {
     customerQuery: async (phoneNumber) => {
         const customerResp = await axios.post(

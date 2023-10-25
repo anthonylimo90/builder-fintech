@@ -123,8 +123,19 @@ menu.state('checkLoanLimit', {
 });
 
 app.get("/", (req, res) => {
-    signale.info("Hey, I'm alive 🧟🧟")
+    signale.info("Hey, I'm alive 🧟🧟");
 });
+
+app.post("/events", (req, res) => {
+    signale.info(`
+    This is what is happening on ${req.body.sessionId} 👇🏽
+
+    Phone Number: ${req.body.phoneNumber}
+    Status: ${req.body.status}
+    USSD Hops Count: ${req.body.hopsCount}
+    Error Message: ${req.body.errorMessage}
+    `);
+})
 
 // Registering USSD handler with Express
 
