@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const signale = require("signale");
 const utils = require("./utils");
 const Model = require("./../models/model");
 
