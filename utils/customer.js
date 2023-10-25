@@ -117,8 +117,8 @@ const customer = {
             }
         );
 
-        signale.debug(customerResp);
-        return customerResp.creditLimit;
+        signale.debug(customerResp.data);
+        return customerResp.data;
     }
 };
 
