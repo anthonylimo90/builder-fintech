@@ -85,7 +85,6 @@ menu.startState({
         // });
         menu.con(`
                 Welcome to the world of Nisome Bank
-                ${resp.firstName} ${resp.lastName}
 
                 1. Send Money
                 2. Deposit
@@ -112,7 +111,6 @@ menu.state('defaultState', {
     run: () => {
         menu.con(`
                 Welcome to the world of Nisome Bank
-                ${resp.firstName} ${resp.lastName}
 
                 1. Send Money
                 2. Deposit
