@@ -11,15 +11,15 @@ const Model = require("./models/model");
 
 const mongoString = process.env.MONGO_URI;
 
-mongoose.connect(mongoString);
-const database = mongoose.connection;
+// mongoose.connect(mongoString);
+// const database = mongoose.connection;
 
-database.on("error", (error) => {
-    signale.error(`Something went wrong while trying to connect to the database: ${error}`);
-});
-database.once("connected", () => {
-    signale.success("Database is connected...😎");
-});
+// database.on("error", (error) => {
+//     signale.error(`Something went wrong while trying to connect to the database: ${error}`);
+// });
+// database.once("connected", () => {
+//     signale.success("Database is connected...😎");
+// });
 
 const port = process.env.PORT || 3000;
 
@@ -32,7 +32,7 @@ let menu = new UssdMenu();
 
 // Define menu states
 menu.startState({
-    run: async () => {
+    run: () => {
         // const phoneNumber = menu.args.phoneNumber;
         // signale.debug(`This is the phone number in use: ${phoneNumber}`);
 
@@ -107,6 +107,33 @@ menu.startState({
         '7': 'aboutNisomeBank'
     }
 });
+
+menu.state('defaultState', {
+    run: () => {
+        menu.con(`
+                Welcome to the world of Nisome Bank
+                ${resp.firstName} ${resp.lastName}
+
+                1. Send Money
+                2. Deposit
+                3. Check balance
+                4. Pay by code
+                5. Check KYC Status
+                6. Check Loan Limit
+                7. About Nisome Bank
+                `);
+    },
+    // next object links to next state based on user input
+    next: {
+        '1': 'sendMoney',
+        '2': 'deposit',
+        '3': 'checkBalance',
+        '4': 'payByCode',
+        '5': 'checkKYCStatus',
+        '6': 'checkLoanLimit',
+        '7': 'aboutNisomeBank'
+    }
+})
 
 menu.state('sendMoney', {
     run: async () => {
@@ -337,11 +364,11 @@ menu.state('payByCode.paybillNumber', {
         `);
     },
     next: {
-        '/^\d{6,8}$/': 'payByCode.paybillNumber.accountNumber'
+        '/^\d{6,8}$/': 'payByCode.paybillNumberAccountNumber'
     }
 });
 
-menu.state('payByCode.paybillNumber.accountNumber', {
+menu.state('payByCode.paybillNumberAccountNumber', {
     run: () => {
         menu.con(`
         Enter Account Number:
@@ -412,7 +439,13 @@ menu.state('payByCode.pinEntry', {
     }
 });
 
-menu.state('payByCode.endState');
+menu.state('payByCode.endState', {
+    run: () => {
+        menu.end(`
+        Your transaction is being processed. Kindly wait for an SMS confrmation.
+        `);
+    },
+});
 
 // Check KYC Status
 
