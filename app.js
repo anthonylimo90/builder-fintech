@@ -83,16 +83,14 @@ menu.startState({
         // }).catch(error => {
         //     signale.error( `Something went terribly wrong 🤯: ${error}`);
         // });
-        menu.con(`
-                Welcome to the world of Nisome Bank
-
-                1. Send Money
-                2. Deposit
-                3. Check balance
-                4. Pay by code
-                5. Check KYC Status
-                6. Check Loan Limit
-                7. About Nisome Bank
+        menu.con(`Welcome to the world of Nisome Bank
+        1. Send Money
+        2. Deposit
+        3. Check balance
+        4. Pay by code
+        5. Check KYC Status
+        6. Check Loan Limit
+        7. About Nisome Bank
                 `);
     },
     // next object links to next state based on user input
@@ -109,17 +107,15 @@ menu.startState({
 
 menu.state('defaultState', {
     run: () => {
-        menu.con(`
-                Welcome to the world of Nisome Bank
-
-                1. Send Money
-                2. Deposit
-                3. Check balance
-                4. Pay by code
-                5. Check KYC Status
-                6. Check Loan Limit
-                7. About Nisome Bank
-                `);
+        menu.con(`Welcome to the world of Nisome Bank
+        1. Send Money
+        2. Deposit
+        3. Check balance
+        4. Pay by code
+        5. Check KYC Status
+        6. Check Loan Limit
+        7. About Nisome Bank
+        `);
     },
     // next object links to next state based on user input
     next: {
@@ -154,9 +150,7 @@ menu.state('sendMoney', {
 
 menu.state('sendMoney.sendToLOOP', {
     run: async () => {
-        menu.con(`
-        Enter the Nisome(LOOP) Mobile Number you'd like to send to:
-        `);
+        menu.con(`Enter the Nisome(LOOP) Mobile Number you'd like to send to:`);
     },
     next: {
         '*\\d+': 'sendMoney.accountSelection'
@@ -165,9 +159,7 @@ menu.state('sendMoney.sendToLOOP', {
 
 menu.state('sendMoney.sendToMPESA', {
     run: async () => {
-        menu.con(`
-        Enter the MPESA Mobile Number you'd like to send to:
-        `);
+        menu.con(`Enter the MPESA Mobile Number you'd like to send to:`);
     },
     next: {
         '*\\d+': 'sendMoney.accountSelection'
@@ -176,9 +168,7 @@ menu.state('sendMoney.sendToMPESA', {
 
 menu.state('sendMoney.sendToAirtelMoney', {
     run: () => {
-        menu.con(`
-        Enter the Airtel Money Mobile Number you'd like to send to:
-        `);
+        menu.con(`Enter the Airtel Money Mobile Number you'd like to send to:`);
     },
     next: {
         '*\\d+': 'sendMoney.accountSelection'
@@ -187,9 +177,7 @@ menu.state('sendMoney.sendToAirtelMoney', {
 
 menu.state('sendMoney.sendWithPesaLink', {
     run: async () => {
-        menu.con(`
-        Enter the Pesalink Mobile Number you'd like to send to:
-        `);
+        menu.con(`Enter the Pesalink Mobile Number you'd like to send to:`);
     },
     next: {
         '*\\d+': 'sendMoney.accountSelection'
@@ -200,9 +188,7 @@ menu.state('sendMoney.sendWithPesaLink', {
 
 menu.state('sendMoney.amount', {
     run: async () => {
-        menu.con(`
-        Enter the amount you'd like to send:
-        `);
+        menu.con(`Enter the amount you'd like to send:`);
     },
     next: {
         '*\\d+': 'sendMoney.accountSelection'
@@ -211,8 +197,7 @@ menu.state('sendMoney.amount', {
 
 menu.state('sendMoney.accountSelection', {
     run: () => {
-        menu.con(`
-        Select the account you would like to use:
+        menu.con(`Select the account you would like to use:
         1. LOOP Wallet
         2. LOOP Bank
         `);
@@ -225,9 +210,7 @@ menu.state('sendMoney.accountSelection', {
 
 menu.state('sendMoney.pinEntry', {
     run: () => {
-        menu.con(`
-        Enter your LOOP USSD PIN:
-        `);
+        menu.con(`Enter your LOOP USSD PIN:`);
     },
     next: {
         '*\\d+': 'sendMoney.endState'
@@ -236,8 +219,7 @@ menu.state('sendMoney.pinEntry', {
 
 menu.state('sendMoney.confirmationScreen', {
     run: () => {
-        menu.con(`
-        Confirm that you're sending KES 300 to 07220000000
+        menu.con(`Confirm that you're sending KES 300 to 07220000000
         1. Yes
         2. No
         `);
@@ -250,9 +232,7 @@ menu.state('sendMoney.confirmationScreen', {
 
 menu.state('sendMoney.endState', {
     run: () => {
-        menu.end(`
-        Your transaction is being processed. Kindly wait for an SMS confrmation.
-        `)
+        menu.end(`Your transaction is being processed. Kindly wait for an SMS confrmation.`)
     }
 });
 
@@ -260,9 +240,7 @@ menu.state('sendMoney.endState', {
 
 menu.state('deposit', {
     run: () => {
-        menu.con(`
-        Enter the amount you'd like to deposit from MPESA:
-        `);
+        menu.con(`Enter the amount you'd like to deposit from MPESA:`);
     },
     next: {
         '*\\d+': 'deposit.confirmationScreen'
@@ -273,8 +251,7 @@ menu.state('deposit', {
 
 menu.state('deposit.confirmationScreen', {
     run: () => {
-        menu.con(`
-        Confirm you are about to deposit 300 KES to your account:
+        menu.con(`Confirm you are about to deposit 300 KES to your account:
         1. Yes
         2. No
         `);
@@ -287,17 +264,13 @@ menu.state('deposit.confirmationScreen', {
 
 menu.state('deposit.cancelledScreen', {
     run: () => {
-        menu.con(`
-        You have cancelled this transaction.
-        `);
+        menu.con(`You have cancelled this transaction.`);
     }
 })
 
 menu.state('deposit.pinEntry', {
     run: () => {
-        menu.con(`
-        Enter your LOOP USSD PIN:
-        `);
+        menu.con(`Enter your LOOP USSD PIN:`);
     },
     next: {
         '*\\d+': 'deposit.endState'
@@ -306,9 +279,7 @@ menu.state('deposit.pinEntry', {
 
 menu.state('deposit.endState', {
     run: () => {
-        menu.end(`
-        Your transaction is being processed. Kindly wait for an SMS confrmation.
-        `);
+        menu.end(`Your transaction is being processed. Kindly wait for an SMS confrmation.`);
     }
 });
 
@@ -325,8 +296,7 @@ menu.state('checkBalance', {
         //     signale.error( `Something went terribly wrong 🤯: ${error}`);
         // });
 
-        menu.con(`
-        Your account balances:
+        menu.con(`Your account balances:
         1. LOOP Wallet: 300 KES
         2. LOOP Bank: 100,000 KES
 
@@ -342,9 +312,7 @@ menu.state('checkBalance', {
 
 menu.state('payByCode', {
     run: () => {
-        menu.con(`
-        Pay By Code
-
+        menu.con(`Pay By Code
         1. LOOP Till
         2. MPESA Till
         3. MPESA Paybill
@@ -363,9 +331,7 @@ menu.state('payByCode', {
 
 menu.state('payByCode.tillNumber', {
     run: () => {
-        menu.con(`
-        Enter Till Number:
-        `);
+        menu.con(`Enter Till Number:`);
     },
     next: {
         '*\\d+': 'payByCode.amount'
@@ -374,9 +340,7 @@ menu.state('payByCode.tillNumber', {
 
 menu.state('payByCode.paybillNumber', {
     run: () => {
-        menu.con(`
-        Enter MPESA Paybill:
-        `);
+        menu.con(`Enter MPESA Paybill:`);
     },
     next: {
         '*\\d+': 'payByCode.paybillNumberAccountNumber'
@@ -385,9 +349,7 @@ menu.state('payByCode.paybillNumber', {
 
 menu.state('payByCode.paybillNumberAccountNumber', {
     run: () => {
-        menu.con(`
-        Enter Account Number:
-        `);
+        menu.con(`Enter Account Number:`);
     },
     next: {
         '*\\d+': 'payByCode.amount'
@@ -396,9 +358,7 @@ menu.state('payByCode.paybillNumberAccountNumber', {
 
 menu.state('payByCode.amount', {
     run: () => {
-        menu.con(`
-        Enter the amount you would like to pay:
-        `);
+        menu.con(`Enter the amount you would like to pay:`);
     },
     next: {
         '*\\d+': 'payByCode.accountSelection'
@@ -407,11 +367,9 @@ menu.state('payByCode.amount', {
 
 menu.state('payByCode.accountSelection', {
     run: () => {
-        menu.con(`
-        Select the account you would like to use:
+        menu.con(`Select the account you would like to use:
         1. LOOP Wallet
-        2. LOOP Bank
-        `);
+        2. LOOP Bank`);
     },
     next: {
         '1': 'payByCode.confirmationScreen',
@@ -423,8 +381,7 @@ menu.state('payByCode.accountSelection', {
 
 menu.state('payByCode.confirmationScreen', {
     run: () => {
-        menu.con(`
-        Confirm you want to pay 300 KES to Jamii LTD:
+        menu.con(`Confirm you want to pay 300 KES to Jamii LTD:
         1. Yes
         2. No
         `);
@@ -437,17 +394,13 @@ menu.state('payByCode.confirmationScreen', {
 
 menu.state('payByCode.cancelledScreen', {
     run: () => {
-        menu.con(`
-        You have cancelled this operation.
-        `);
+        menu.con(`You have cancelled this operation.`);
     }
 });
 
 menu.state('payByCode.pinEntry', {
     run: () => {
-        menu.con(`
-        Enter your LOOP USSD PIN:
-        `);
+        menu.con(`Enter your LOOP USSD PIN:`);
     },
     next: {
         '*\\d+': 'payByCode.endState'
@@ -456,9 +409,7 @@ menu.state('payByCode.pinEntry', {
 
 menu.state('payByCode.endState', {
     run: () => {
-        menu.end(`
-        Your transaction is being processed. Kindly wait for an SMS confrmation.
-        `);
+        menu.end(`Your transaction is being processed. Kindly wait for an SMS confrmation.`);
     },
 });
 
@@ -466,19 +417,9 @@ menu.state('payByCode.endState', {
 
 menu.state('checkKYCStatus', {
     run: async () => {
-        // const phoneNumber = menu.args.phoneNumber;
-        // await customer.customerKYCQuery(phoneNumber).then(async (resp) => {
-        //     signale.debug(`This customer's KYC status is: ${resp.kycStatus}`);
-        //     menu.end(`Your KYC status is: ${resp.kycStatus}`);
-        // }).catch(error => {
-        //     signale.error( `Something went terribly wrong 🤯: ${error}`);
-        // });
+        menu.con(`Your KYC is validated.
 
-        menu.con(`
-        Your KYC is validated.
-
-        0. Back
-        `);
+        0. Back`);
     },
     next: {
         '0': 'defaultState'
@@ -488,18 +429,9 @@ menu.state('checkKYCStatus', {
 // Check Loan Limits
 menu.state('checkLoanLimit', {
     run: async () => {
-        // const phoneNumber = menu.args.phoneNumber;
-        // await customer.loanLimitQuery(phoneNumber).then(async (resp) => {
-        //     signale.debug(`This customer's loan limit is: ${resp.creditLimit}`);
-        //     menu.end(`Your loan limit is: ${resp.creditLimit} KES`);
-        // }).catch(error => {
-        //     signale.error( `Something went terribly wrong 🤯: ${error}`);
-        // })
-        menu.con(`
-        Your loan limit is 50,000 KES
+        menu.con(`Your loan limit is 50,000 KES
 
-        0. Back
-        `);
+        0. Back`);
     },
     next: {
         '0': 'defaultState'
@@ -510,9 +442,7 @@ menu.state('checkLoanLimit', {
 
 menu.state('aboutNisomeBank', {
     run: () => {
-        menu.con(`
-        Just some cool info :)
-        `);
+        menu.con(`Just some cool info :)`);
     }
 });
 
