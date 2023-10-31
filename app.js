@@ -137,7 +137,7 @@ menu.state('sendMoney', {
     run: async () => {
         menu.con(`
         Send Money:
-        1. Send to LOOP
+        1. Send to Nisome(LOOP)
         2. Send to MPESA
         3. Send to PesaLink
         `);
@@ -145,7 +145,8 @@ menu.state('sendMoney', {
     next: {
         '1': 'sendMoney.sendToLOOP',
         '2': 'sendMoney.sendtoMPESA',
-        '3': 'sendMoney.sendWithPesalink'
+        '3': 'sendMoney.sendtoAirtelMoney',
+        '4': 'sendMoney.sendWithPesalink'
     }
 });
 
@@ -154,7 +155,7 @@ menu.state('sendMoney', {
 menu.state('sendMoney.sendToLOOP', {
     run: async () => {
         menu.con(`
-        Enter the LOOP Mobile Number you'd like to send to:
+        Enter the Nisome(LOOP) Mobile Number you'd like to send to:
         `);
     },
     next: {
@@ -165,7 +166,7 @@ menu.state('sendMoney.sendToLOOP', {
 menu.state('sendMoney.sendToMPESA', {
     run: async () => {
         menu.con(`
-        Enter the LOOP Mobile Number you'd like to send to:
+        Enter the MPESA Mobile Number you'd like to send to:
         `);
     },
     next: {
@@ -173,10 +174,21 @@ menu.state('sendMoney.sendToMPESA', {
     }
 });
 
+menu.state('sendMoney.sendToAirtelMoney', {
+    run: () => {
+        menu.con(`
+        Enter the Airtel Money Mobile Number you'd like to send to:
+        `);
+    },
+    next: {
+        '*\\d+': 'sendMoney.accountSelection'
+    }
+})
+
 menu.state('sendMoney.sendWithPesaLink', {
     run: async () => {
         menu.con(`
-        Enter the LOOP Mobile Number you'd like to send to:
+        Enter the Pesalink Mobile Number you'd like to send to:
         `);
     },
     next: {
@@ -214,7 +226,7 @@ menu.state('sendMoney.accountSelection', {
 menu.state('sendMoney.pinEntry', {
     run: () => {
         menu.con(`
-        Enter your LOOP USSD Pin:
+        Enter your LOOP USSD PIN:
         `);
     },
     next: {
@@ -284,7 +296,7 @@ menu.state('deposit.cancelledScreen', {
 menu.state('deposit.pinEntry', {
     run: () => {
         menu.con(`
-        Enter your LOOP USSD Pin:
+        Enter your LOOP USSD PIN:
         `);
     },
     next: {
@@ -294,7 +306,7 @@ menu.state('deposit.pinEntry', {
 
 menu.state('deposit.endState', {
     run: () => {
-        menu.con(`
+        menu.end(`
         Your transaction is being processed. Kindly wait for an SMS confrmation.
         `);
     }
@@ -317,7 +329,12 @@ menu.state('checkBalance', {
         Your account balances:
         1. LOOP Wallet: 300 KES
         2. LOOP Bank: 100,000 KES
+
+        0. Back
         `);
+    },
+    next: {
+        '0': 'defaultState'
     }
 });
 
@@ -358,7 +375,7 @@ menu.state('payByCode.tillNumber', {
 menu.state('payByCode.paybillNumber', {
     run: () => {
         menu.con(`
-        Enter Paybill:
+        Enter MPESA Paybill:
         `);
     },
     next: {
@@ -429,7 +446,7 @@ menu.state('payByCode.cancelledScreen', {
 menu.state('payByCode.pinEntry', {
     run: () => {
         menu.con(`
-        Enter your pin:
+        Enter your LOOP USSD PIN:
         `);
     },
     next: {
@@ -459,7 +476,12 @@ menu.state('checkKYCStatus', {
 
         menu.con(`
         Your KYC is validated.
+
+        0. Back
         `);
+    },
+    next: {
+        '0': 'defaultState'
     }
 });
 
@@ -475,7 +497,12 @@ menu.state('checkLoanLimit', {
         // })
         menu.con(`
         Your loan limit is 50,000 KES
+
+        0. Back
         `);
+    },
+    next: {
+        '0': 'defaultState'
     }
 });
 
