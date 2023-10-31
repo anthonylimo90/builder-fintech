@@ -158,7 +158,7 @@ menu.state('sendMoney.sendToLOOP', {
         `);
     },
     next: {
-        '/^+?\d+(?:[-.()]\d+)*$/i': 'sendMoney.accountSelection'
+        '/^\d{10}$/': 'sendMoney.accountSelection'
     }
 });
 
@@ -169,7 +169,7 @@ menu.state('sendMoney.sendToMPESA', {
         `);
     },
     next: {
-        '/^+?\d+(?:[-.()]\d+)*$/i': 'sendMoney.accountSelection'
+        '/^\d{10}$/': 'sendMoney.accountSelection'
     }
 });
 
@@ -180,7 +180,7 @@ menu.state('sendMoney.sendWithPesaLink', {
         `);
     },
     next: {
-        '/^+?\d+(?:[-.()]\d+)*$/i': 'sendMoney.accountSelection'
+        '/^\d{10}$/': 'sendMoney.accountSelection'
     }
 });
 
@@ -193,7 +193,7 @@ menu.state('sendMoney.amount', {
         `);
     },
     next: {
-        '/^(?:0|[1-9]\d{0,4}|1[0-4]\d{4}|150000)$/': 'sendMoney.accountSelection'
+        '/^\d{10}$/': 'sendMoney.accountSelection'
     }
 });
 
@@ -288,7 +288,7 @@ menu.state('deposit.pinEntry', {
         `);
     },
     next: {
-        '': 'deposit.endState'
+        '/^\d{4}$/': 'deposit.endState'
     }
 });
 
@@ -384,7 +384,7 @@ menu.state('payByCode.amount', {
         `);
     },
     next: {
-        '/^+? \d+ (?: [-. ()] \d+)*$/i': 'payByCode.accountSelection'
+        '/^(?:0|[1-9]\d{0,4}|1[0-4]\d{4}|150000)$/': 'payByCode.accountSelection'
     }
 });
 
@@ -433,7 +433,7 @@ menu.state('payByCode.pinEntry', {
         `);
     },
     next: {
-        '': 'payByCode.endState'
+        '/^\d{4}$/': 'payByCode.endState'
     }
 });
 
