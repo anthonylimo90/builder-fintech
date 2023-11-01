@@ -140,8 +140,8 @@ menu.state('sendMoney', {
     },
     next: {
         '1': 'sendMoney.sendToLOOP',
-        '2': 'sendMoney.sendtoMPESA',
-        '3': 'sendMoney.sendtoAirtelMoney',
+        '2': 'sendMoney.sendToMPESA',
+        '3': 'sendMoney.sendToAirtelMoney',
         '4': 'sendMoney.sendWithPesalink'
     }
 });
